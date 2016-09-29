@@ -15,19 +15,16 @@ Shader "Sphere/Cloud" {
 		_FadeScale ("Fade Scale", Range(0,1)) = .002
 		_RimDist ("Rim Distance", Range(0,1)) = 1
 	}
-
-Category {
-	
-	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" }
-	Blend SrcAlpha OneMinusSrcAlpha
-	Cull Off ZWrite Off
-	Offset -1,-1
 	
 SubShader {
+			Tags{ "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
+			Blend SrcAlpha OneMinusSrcAlpha
+			Cull Off ZWrite Off
+			Offset -1,-1
+
 	Pass { 
-		Lighting On
-		Tags { "LightMode"="ForwardBase"}
-		
+			Tags{ "LightMode" = "ForwardBase" }
+
 		CGPROGRAM
 		
 		#include "UnityCG.cginc"
@@ -41,6 +38,12 @@ SubShader {
 		#define INV_PI (1.0/PI)
 		#define TWOPI (2.0*PI) 
 		#define INV_2PI (1.0/TWOPI)
+
+		    // compile shader into multiple variants, with and without shadows
+            // (we don't care about any lightmaps yet, so skip these variants)
+            #pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
+            // shadow helper functions and macros
+            #include "AutoLight.cginc"
 	 
 		sampler2D _MainTex;
 		sampler2D _DetailTex;
@@ -69,6 +72,7 @@ SubShader {
 			float3 worldNormal : TEXCOORD3;
 			float3 objNormal : TEXCOORD4;
 			float3 viewDir : TEXCOORD5;
+			SHADOW_COORDS(6)
 		};	
 		
 
@@ -85,6 +89,8 @@ SubShader {
 	   	   o.worldNormal = normalize(vertexPos-origin);
 	   	   o.objNormal = normalize( v.vertex);
 	   	   o.viewDir = normalize(WorldSpaceViewDir(v.vertex));
+		   TRANSFER_SHADOW(o)
+
 	   	   return o;
 	 	}
 	 	
@@ -136,13 +142,15 @@ SubShader {
 			half lightIntensity = saturate(_LightColor0.a * diff * 4);
 			color.rgb *= saturate(ambientLighting + ((_MinLight + _LightColor0.rgb) * lightIntensity));
 
+			fixed shadow = SHADOW_ATTENUATION(IN);
+			color.rgb *= shadow;
+
           	return color;
 		}
 		ENDCG
 	
-		}
+		}  
 		
 	} 
 	
-}
 }

@@ -221,6 +221,7 @@ namespace Clouds
                         useEditor = !useEditor;
                     }
                 }
+
                 if (HighLogic.LoadedScene == GameScenes.FLIGHT)
                 {
                     if (FlightGlobals.ActiveVessel != null && CloudLayer.BodyDatabase.ContainsKey(FlightGlobals.currentMainBody.name))
@@ -229,7 +230,11 @@ namespace Clouds
                         foreach (CloudLayer layer in CloudLayer.BodyDatabase[FlightGlobals.currentMainBody.name])
                         {
                             layer.UpdateParticleClouds(COM);
-                            layer.CloudMaterial.renderQueue = 3001;
+
+                            layer.CloudMaterial.renderQueue = 3000;
+
+                            if (!MapView.MapIsEnabled)
+                                layer.CloudMaterial.renderQueue = 3001;
                         }
                     }
                 }
@@ -237,18 +242,15 @@ namespace Clouds
                 {
                     if (CloudLayer.BodyDatabase.ContainsKey(FlightGlobals.currentMainBody.name))
                     {
-                        foreach (CloudLayer cl in CloudLayer.BodyDatabase[FlightGlobals.currentMainBody.name])
+                        foreach (CloudLayer layer in CloudLayer.BodyDatabase[FlightGlobals.currentMainBody.name])
                         {
-                            cl.UpdateParticleClouds(GameObject.Find("KSC").transform.position);
-                            cl.CloudMaterial.renderQueue = 3001;
+                            layer.UpdateParticleClouds(GameObject.Find("KSC").transform.position);
+                            layer.CloudMaterial.renderQueue = 3001;
                         }
                     }
                 }
             }
-            catch
-            {
-
-            }
+            catch (NullReferenceException) { }
         }
 
 

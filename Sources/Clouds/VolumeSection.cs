@@ -73,7 +73,17 @@ namespace Clouds
             Vector3 point = particle.transform.parent.parent.InverseTransformPoint(particle.transform.position).normalized;
             float u = (float)(.5 + (Mathf.Atan2(point.z, point.x) / (2f * Mathf.PI)));
             float v = Mathf.Acos(-point.y) / Mathf.PI;
+
             Color color = tex.GetPixelBilinear(u, v);
+
+            if (color.a == 0)
+            {
+                particle.SetActive(false);
+                return;
+            }
+            else
+                particle.SetActive(true);
+
             MeshFilter filter = particle.GetComponent<MeshFilter>();
             Mesh mesh = filter.mesh;
             mesh.colors = new Color[4]
@@ -87,6 +97,14 @@ namespace Clouds
 
         internal void Update(Color color)
         {
+            if (color.a == 0)
+            {
+                particle.SetActive(false);
+                return;
+            }
+            else
+                particle.SetActive(true);
+
             MeshFilter filter = particle.GetComponent<MeshFilter>();
             Mesh mesh = filter.mesh;
             mesh.colors = new Color[4]

@@ -21,6 +21,6 @@ using System.Reflection;
 [assembly: AssemblyProduct("Kerbal Visual Enhancements")]
 [assembly: AssemblyCopyright("Copyright © 2013-2016 Ryan Bray, RangeMachine")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
 
-[assembly: KSPAssembly("Kerbal Visual Enhancements", 1, 0)]
+[assembly: KSPAssembly("Kerbal Visual Enhancements", 1, 1)]

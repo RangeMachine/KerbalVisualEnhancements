@@ -203,13 +203,43 @@ namespace Utilities
                 else if (!isBump && !TextureDictionary.ContainsKey(textureFile))
                 {
                     Texture2D tex = GameDatabase.Instance.GetTexture(textureFile, isBump);
+
+                    //////////////////////////
+                    /// DDS BUG WORKAROUND ///
+                    //////////////////////////
+                    try
+                    {
+                        tex.GetPixel(0, 0);
+                    }
+                    catch (UnityException)
+                    {
+                        tex.filterMode = FilterMode.Point;
+
+                        RenderTexture rt = RenderTexture.GetTemporary(tex.width, tex.height);
+                        rt.filterMode = FilterMode.Point;
+
+                        RenderTexture.active = rt;
+                        Graphics.Blit(tex, rt);
+
+                        Texture2D img2 = new Texture2D(tex.width, tex.height);
+                        img2.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
+                        img2.Apply();
+
+                        RenderTexture.active = null;
+
+                        tex = img2;
+                    }
+                    //////////////////////////
+
                     try { AddMipMaps(tex); }
                     catch { }
+
                     if (tex.format != TextureFormat.DXT1 && tex.format != TextureFormat.DXT5)
                     {
                         try { tex.GetPixel(0, 0); tex.Compress(true); }
                         catch { }
                     }
+
                     TextureDictionary.Add(textureFile, tex);
                 }
                 string textureName = isBump ? textureFile + "_BUMP" : textureFile;

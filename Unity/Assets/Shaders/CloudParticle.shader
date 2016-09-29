@@ -11,17 +11,15 @@ Properties {
 	_MinLight ("Minimum Light", Range(0,1)) = .5
 	_Color ("Color Tint", Color) = (1,1,1,1)
 }
-
-Category {
 	
-	Tags { "Queue"="Transparent+1" "IgnoreProjector"="True" "RenderType"="Transparent" }
+	SubShader {
+
+	Tags { "Queue" = "Transparent+1" "IgnoreProjector"="True" "RenderType"="Transparent" }
 	Blend SrcAlpha OneMinusSrcAlpha
 	Cull Off ZWrite Off
 	Offset -1,-1
-	
-	SubShader {
+
 		Pass {
-			Lighting On
 			Tags { "LightMode"="ForwardBase"}
 			
 			CGPROGRAM
@@ -164,5 +162,4 @@ Category {
 		
 	} 
 	
-}
 }

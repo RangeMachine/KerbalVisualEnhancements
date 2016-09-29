@@ -81,11 +81,9 @@ namespace Utilities
             using (WWW www = new WWW("file://" + KSPUtil.ApplicationRootPath + "GameData/KerbalVisualEnhancements/Shaders/" + bundlePath))
             {
                 Log("Bundle '" + bundlePath + "' loaded.");
-
-                Log("Bundle '" + bundlePath + "' loaded.");
+                BundleLoaded = true;
 
                 AssetBundle bundle = www.assetBundle;
-
                 Shader[] shaders = bundle.LoadAllAssets<Shader>();
 
                 foreach (Shader shader in shaders)
@@ -96,8 +94,6 @@ namespace Utilities
 
                 bundle.Unload(false);
                 www.Dispose();
-
-                BundleLoaded = true;
             }
         }
 
@@ -168,7 +164,11 @@ namespace Utilities
 
         protected void Start()
         {
-            
+            if (HighLogic.LoadedScene == GameScenes.SPACECENTER || HighLogic.LoadedScene == GameScenes.FLIGHT)
+            {
+                SetTerrainShadows();
+            }
+
             if (HighLogic.LoadedScene == GameScenes.MAINMENU)
             {
                 EnableMainOverlay();
@@ -176,6 +176,37 @@ namespace Utilities
             else
             {
                  DisableMainOverlay();
+            }
+        }
+
+        private void SetTerrainShadows()
+        {
+            bool terrainShadows = false;
+
+            ConfigNode volumeConfig = GameDatabase.Instance.GetConfigNodes("KERBAL_VISUAL_ENHANCEMENTS")[0];
+            bool.TryParse(volumeConfig.GetValue("terrainShadows"), out terrainShadows);
+
+            if (terrainShadows)
+            {
+                foreach (CelestialBody body in FindObjectsOfType(typeof(CelestialBody)))
+                {
+                    if (body.pqsController)
+                    {
+                        body.pqsController.meshCastShadows = true;
+                        body.pqsController.meshRecieveShadows = true;
+
+                        QualitySettings.shadowDistance = 100000;
+
+                        foreach (Light light in FindObjectsOfType(typeof(Light)))
+                        {
+                            if ((light.gameObject.name == "Scaledspace SunLight") || (light.gameObject.name == "SunLight"))
+                            {
+                                // light.shadowNormalBias = 0.4f;
+                                // light.shadowBias = 0.125f;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -394,7 +425,7 @@ namespace Utilities
             var mr = OverlayGameObject.AddComponent<MeshRenderer>();
             mr.sharedMaterial = scaledMaterial;
             mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            mr.receiveShadows = false;
+            mr.receiveShadows = true;
             //mr.enabled = mainMenu;
             mr.enabled = true;
 
@@ -437,6 +468,7 @@ namespace Utilities
             Rotation.x += .25f;
             
             Transform celestialTransform = PSystemManager.Instance.scaledBodies.Single(t => t.name == planet).transform;
+
             Overlay overlay = new Overlay(planet, altitude, scaledMaterial, macroMaterial, Rotation, OverlayMgr.MAP_LAYER, celestialTransform, mainMenu, matchTerrain);
             if (!mainMenu)
             {
