@@ -1,0 +1,12 @@
+Dependencies/Assembly-CSharp.dll
+Dependencies/UnityEngine.dll
+Sources/Clouds/obj/*
+Sources/Geometry/obj/*
+Sources/Utilities/obj/*
+GameData/KerbalVisualEnhancements/Plugins/*
+Unity/Bundles/*
+Unity/Library/*
+Unity/Temp/*
+Unity/Unity.CSharp.csproj
+Unity/Unity.sln
+*.suo
