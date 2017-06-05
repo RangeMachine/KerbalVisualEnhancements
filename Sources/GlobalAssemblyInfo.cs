@@ -19,8 +19,8 @@ using System.Reflection;
 
 [assembly: AssemblyDescription("Plugin for Kerbal Space Program")]
 [assembly: AssemblyProduct("Kerbal Visual Enhancements")]
-[assembly: AssemblyCopyright("Copyright © 2013-2016 Ryan Bray, RangeMachine")]
+[assembly: AssemblyCopyright("Copyright © 2013-2017 Ryan Bray, RangeMachine")]
 
-[assembly: AssemblyVersion("1.1.0.1")]
+[assembly: AssemblyVersion("1.2.0.0")]
 
-[assembly: KSPAssembly("Kerbal Visual Enhancements", 1, 1)]
+[assembly: KSPAssembly("Kerbal Visual Enhancements", 1, 2)]
