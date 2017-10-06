@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clouds", "Sources\Clouds\Clouds.csproj", "{8DF6A385-18E6-4E76-A060-4C3847CA3046}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry", "Sources\Geometry\Geometry.csproj", "{8B24314B-4B75-43F3-B31C-FFA9FC83FB70}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Sources\Utilities\Utilities.csproj", "{6B877DDF-EBC6-4EFD-A0F7-01F7CAD8CF87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KerbalVisualEnhancements", "Sources\KerbalVisualEnhancements.csproj", "{8DF6A385-18E6-4E76-A060-4C3847CA3046}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +12,6 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8DF6A385-18E6-4E76-A060-4C3847CA3046}.KerbalVisualEnhancements|Any CPU.ActiveCfg = KerbalVisualEnhancements|Any CPU
 		{8DF6A385-18E6-4E76-A060-4C3847CA3046}.KerbalVisualEnhancements|Any CPU.Build.0 = KerbalVisualEnhancements|Any CPU
-		{8B24314B-4B75-43F3-B31C-FFA9FC83FB70}.KerbalVisualEnhancements|Any CPU.ActiveCfg = KerbalVisualEnhancements|Any CPU
-		{8B24314B-4B75-43F3-B31C-FFA9FC83FB70}.KerbalVisualEnhancements|Any CPU.Build.0 = KerbalVisualEnhancements|Any CPU
-		{6B877DDF-EBC6-4EFD-A0F7-01F7CAD8CF87}.KerbalVisualEnhancements|Any CPU.ActiveCfg = KerbalVisualEnhancements|Any CPU
-		{6B877DDF-EBC6-4EFD-A0F7-01F7CAD8CF87}.KerbalVisualEnhancements|Any CPU.Build.0 = KerbalVisualEnhancements|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

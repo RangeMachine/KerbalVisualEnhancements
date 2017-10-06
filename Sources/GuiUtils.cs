@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright © 2013-2016 Ryan Bray, RangeMachine
+ * Copyright © 2013-2017 Ryan Bray, RangeMachine
  */
 
 using System;
@@ -22,7 +22,7 @@ using UnityEngine;
 
 namespace Utilities
 {
-    public class AltitudeSetGUI
+    public class FloatGUI
     {
         public float AltitudeF;
         public string AltitudeS;

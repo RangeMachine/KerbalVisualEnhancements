@@ -1,8 +1,6 @@
 Dependencies/Assembly-CSharp.dll
 Dependencies/UnityEngine.dll
-Sources/Clouds/obj/*
-Sources/Geometry/obj/*
-Sources/Utilities/obj/*
+Sources/obj/*
 GameData/KerbalVisualEnhancements/Plugins/*
 Unity/Bundles/*
 Unity/Library/*

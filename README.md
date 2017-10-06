@@ -3,7 +3,7 @@
 
 ### About plugin
 
-This is raw port of [**Environmental Visual Enhancements 7.4**](https://github.com/rbray89/EnvironmentalVisualEnhancements/releases/tag/7-4) for **Kerbal Space Program 1.2** with some modifications. Regarding source plugin here fixed white clouds on the night side and Z-figthing when your are far away from planet.
+This is raw port of [**Environmental Visual Enhancements 7.4**](https://github.com/rbray89/EnvironmentalVisualEnhancements/releases/tag/7-4) for **Kerbal Space Program 1.2** with some modifications. Regarding source plugin here fixed white clouds on the night side and Z-figthing when your are far away from planet. Also now it's allowed to change particle textures and rendering distance for every layer.
 
 It's supports all old clouds packs like [**Better Atmospheres**](http://forum.kerbalspaceprogram.com/index.php?/topic/70221-025090-better-atmospheres-v5-june-14th-2014/), [**Astronomers Visual Pack**](http://forum.kerbalspaceprogram.com/index.php?/topic/92113-025-astronomers-visual-pack-interstellar-v2/) and others. 
 

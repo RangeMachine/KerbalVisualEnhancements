@@ -12,9 +12,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright © 2013-2016 Ryan Bray, RangeMachine
+ * Copyright © 2013-2017 Ryan Bray, RangeMachine
  */
 
 using System.Reflection;
 
-[assembly: AssemblyTitle("Clouds")]
+[assembly: AssemblyTitle("Kerbal Visual Enhancements")]
+[assembly: AssemblyDescription("Plugin for Kerbal Space Program")]
+[assembly: AssemblyProduct("Kerbal Visual Enhancements")]
+[assembly: AssemblyCopyright("Copyright © 2013-2017 Ryan Bray, RangeMachine")]
+
+[assembly: AssemblyVersion("2.0.0.0")]
+
+[assembly: KSPAssembly("Kerbal Visual Enhancements", 1, 3)]

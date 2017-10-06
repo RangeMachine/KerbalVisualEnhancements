@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright © 2013-2016 Ryan Bray, RangeMachine
+ * Copyright © 2013-2017 Ryan Bray, RangeMachine
  */
 
 using System;
@@ -89,6 +89,7 @@ namespace Utilities
                 foreach (Shader shader in shaders)
                 {
                     Log("Shader " + shader.name + " is loaded");
+                    
                     LoadedShaders.Add(shader.name, shader);
                 }
 

@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright © 2013-2016 Ryan Bray, RangeMachine
+ * Copyright © 2013-2017 Ryan Bray, RangeMachine
  */
  
 using System.Collections.Generic;
@@ -63,6 +63,10 @@ namespace Clouds
         private float altitude;
         private TextureSet mainTexture;
         private TextureSet detailTexture;
+        private string particleTopTexture;
+        private string particleLeftTexture;
+        private string particleFrontTexture;
+        private float particleDistance;
         private ShaderFloats scaledShaderFloats;
         private ShaderFloats shaderFloats;
         private Overlay CloudOverlay;
@@ -72,6 +76,10 @@ namespace Clouds
         public ConfigNode ConfigNode { get { return node; } }
         public TextureSet MainTexture { get { return mainTexture; } }
         public TextureSet DetailTexture { get { return detailTexture; } }
+        public string ParticleTopTexture { get { return particleTopTexture; } }
+        public string ParticleLeftTexture { get { return particleLeftTexture; } }
+        public string ParticleFrontTexture { get { return particleFrontTexture; } }
+        public float ParticleDistance { get { return particleDistance; } }
         public Color Color { get { return color; } }
         public float Altitude { get { return altitude; } }
         public ShaderFloats ScaledShaderFloats { get { return scaledShaderFloats; } }
@@ -82,6 +90,10 @@ namespace Clouds
         {
             mainTexture.Clone(cloudGUI.MainTexture);
             detailTexture.Clone(cloudGUI.DetailTexture);
+            particleTopTexture = cloudGUI.ParticleTopTexture;
+            particleLeftTexture = cloudGUI.ParticleLeftTexture;
+            particleFrontTexture = cloudGUI.ParticleFrontTexture;
+            particleDistance = cloudGUI.ParticleDistance.AltitudeF;
             scaledShaderFloats.Clone(cloudGUI.ScaledShaderFloats);
             shaderFloats.Clone(cloudGUI.ShaderFloats);
             altitude = cloudGUI.Altitude.AltitudeF;
@@ -100,6 +112,8 @@ namespace Clouds
                     volume.Destroy();
                     volume = null;
                 }
+
+                DominantCallback(true);
             }
             else
             {
@@ -116,6 +130,10 @@ namespace Clouds
         public CloudLayer(string url, ConfigNode node, string body, Color color, float altitude,
             TextureSet mainTexture,
             TextureSet detailTexture,
+            string particleTopTexture,
+            string particleLeftTexture,
+            string particleFrontTexture,
+            float volumeDistance,
             ShaderFloats ScaledShaderFloats,
             ShaderFloats ShaderFloats,
             bool useVolume)
@@ -143,6 +161,10 @@ namespace Clouds
             this.mainTexture = mainTexture;
 
             this.detailTexture = detailTexture;
+            this.particleTopTexture = particleTopTexture;
+            this.particleLeftTexture = particleLeftTexture;
+            this.particleFrontTexture = particleFrontTexture;
+            this.particleDistance = volumeDistance;
 
             scaledShaderFloats = ScaledShaderFloats;
             shaderFloats = ShaderFloats;
@@ -171,7 +193,31 @@ namespace Clouds
                 ScaledCloudMaterial.SetTexture("_DetailTex", new Texture());
                 CloudMaterial.SetTexture("_DetailTex", new Texture());
             }
+
+            Texture2D topTexture = GameDatabase.Instance.GetTexture(this.particleTopTexture, false);
+            if (topTexture != null)
+            {
+                topTexture.wrapMode = TextureWrapMode.Clamp;
+                CloudParticleMaterial.SetTexture("_TopTex", topTexture);
+            }
+
+            Texture2D leftTexture = GameDatabase.Instance.GetTexture(this.particleLeftTexture, false);
+            if (leftTexture != null)
+            {
+                leftTexture.wrapMode = TextureWrapMode.Clamp;
+                CloudParticleMaterial.SetTexture("_LeftTex", leftTexture);
+            }
+
+            Texture2D frontTexture = GameDatabase.Instance.GetTexture(this.particleFrontTexture, false);
+            if (frontTexture != null)
+            {
+                frontTexture.wrapMode = TextureWrapMode.Clamp;
+                CloudParticleMaterial.SetTexture("_FrontTex", frontTexture);
+            }
             
+            //CloudParticleMaterial.SetFloat("_DistFade", 1f / particleDistance);
+            CloudParticleMaterial.SetFloat("_DistFadeVert", particleDistance);
+
         }
 
         public void Init()
@@ -190,19 +236,6 @@ namespace Clouds
             {
                 shaderFloats = GetDefault(false);
             }
-
-            Texture2D tex1 = GameDatabase.Instance.GetTexture("BoulderCo/Clouds/Textures/particle/1", false);
-            Texture2D tex2 = GameDatabase.Instance.GetTexture("BoulderCo/Clouds/Textures/particle/2", false);
-            Texture2D tex3 = GameDatabase.Instance.GetTexture("BoulderCo/Clouds/Textures/particle/3", false);
-
-            tex1.wrapMode = TextureWrapMode.Clamp;
-            tex2.wrapMode = TextureWrapMode.Clamp;
-            tex3.wrapMode = TextureWrapMode.Clamp;
-
-            CloudParticleMaterial.SetTexture("_TopTex", tex1);
-            CloudParticleMaterial.SetTexture("_LeftTex", tex2);
-            CloudParticleMaterial.SetTexture("_FrontTex", tex3);
-            CloudParticleMaterial.SetFloat("_DistFade", 1f / 2250f);
 
             Log("Cloud Material initialized");
             UpdateTextures();
@@ -300,7 +333,7 @@ namespace Clouds
 
         public static void Log(string message)
         {
-            UnityEngine.Debug.Log("Clouds: " + message);
+            UnityEngine.Debug.Log("[KerbalVisualEnhancements]: " + message);
         }
 
         public static int GetBodyLayerCount(string url, string body)
