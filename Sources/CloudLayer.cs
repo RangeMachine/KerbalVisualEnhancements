@@ -63,9 +63,9 @@ namespace Clouds
         private float altitude;
         private TextureSet mainTexture;
         private TextureSet detailTexture;
-        private string particleTopTexture;
-        private string particleLeftTexture;
-        private string particleFrontTexture;
+        private string particleTopTexture = "";
+        private string particleLeftTexture = "";
+        private string particleFrontTexture = "";
         private float particleDistance;
         private ShaderFloats scaledShaderFloats;
         private ShaderFloats shaderFloats;

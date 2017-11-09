@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Sphere/Cloud" {
 	Properties {
@@ -79,7 +81,7 @@ SubShader {
 		v2f vert (appdata_t v)
 		{
 			v2f o;
-			o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+			o.pos = UnityObjectToClipPos(v.vertex);
 			
 		   float3 vertexPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 		   float3 origin = mul(unity_ObjectToWorld, float4(0,0,0,1)).xyz;

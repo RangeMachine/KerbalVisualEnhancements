@@ -98,12 +98,11 @@ namespace Clouds
 
                 TextureSet mTexture = new TextureSet(loadNode.GetNode("main_texture"), false);
                 TextureSet dTexture = new TextureSet(loadNode.GetNode("detail_texture"), false);
-                string particleTop = loadNode.GetValue("particle_top_texture");
-                string particleLeft = loadNode.GetValue("particle_left_texture");
-                string particleFront = loadNode.GetValue("particle_front_texture");
+                string particleTop = "";
+                string particleLeft = "";
+                string particleFront = "";
                 
                 float particleDistance = 0;
-                float.TryParse(loadNode.GetValue("particle_distance"), out particleDistance);
               
                 ConfigNode floatsConfig = loadNode.GetNode("shader_floats");
                 ShaderFloats shaderFloats = null;
@@ -126,6 +125,10 @@ namespace Clouds
                 if (useVolume)
                 {
                     bool.TryParse(loadNode.GetValue("volume"), out useVolume);
+                    particleTop = loadNode.GetValue("particle_top_texture");
+                    particleLeft = loadNode.GetValue("particle_left_texture");
+                    particleFront = loadNode.GetValue("particle_front_texture");
+                    float.TryParse(loadNode.GetValue("particle_distance"), out particleDistance);
                 }
 
                 CloudLayer.Layers.Add(
@@ -168,10 +171,13 @@ namespace Clouds
                         saveNode.AddNode(detailNode);
                     }
 
-                    saveNode.AddValue("particle_top_texture", cloudLayer.ParticleTopTexture);
-                    saveNode.AddValue("particle_left_texture", cloudLayer.ParticleLeftTexture);
-                    saveNode.AddValue("particle_front_texture", cloudLayer.ParticleFrontTexture);
-                    saveNode.AddValue("particle_distance", cloudLayer.ParticleDistance);
+                    if (cloudLayer.UseVolume)
+                    {
+                        saveNode.AddValue("particle_top_texture", cloudLayer.ParticleTopTexture);
+                        saveNode.AddValue("particle_left_texture", cloudLayer.ParticleLeftTexture);
+                        saveNode.AddValue("particle_front_texture", cloudLayer.ParticleFrontTexture);
+                        saveNode.AddValue("particle_distance", cloudLayer.ParticleDistance);
+                    }
 
                     ConfigNode scaledShaderFloatNode = cloudLayer.ScaledShaderFloats.GetNode("scaled_shader_floats");
                     if (!CloudLayer.IsDefaultShaderFloat(cloudLayer.ScaledShaderFloats, true))
@@ -414,8 +420,11 @@ namespace Clouds
                             CloudGUI.MainTexture.Clone(CloudLayer.ConfigBodyDatabase[configUrl][currentBody.name][SelectedLayer].MainTexture);
                             CloudGUI.DetailTexture.Clone(CloudLayer.ConfigBodyDatabase[configUrl][currentBody.name][SelectedLayer].DetailTexture);
                             CloudGUI.ParticleTopTexture = CloudLayer.ConfigBodyDatabase[configUrl][currentBody.name][SelectedLayer].ParticleTopTexture;
+                            if (CloudGUI.ParticleTopTexture == null) CloudGUI.ParticleTopTexture = "";
                             CloudGUI.ParticleLeftTexture = CloudLayer.ConfigBodyDatabase[configUrl][currentBody.name][SelectedLayer].ParticleLeftTexture;
+                            if (CloudGUI.ParticleLeftTexture == null) CloudGUI.ParticleLeftTexture = "";
                             CloudGUI.ParticleFrontTexture = CloudLayer.ConfigBodyDatabase[configUrl][currentBody.name][SelectedLayer].ParticleFrontTexture;
+                            if (CloudGUI.ParticleFrontTexture == null) CloudGUI.ParticleFrontTexture = "";
                             CloudGUI.ParticleDistance.Clone(CloudLayer.ConfigBodyDatabase[configUrl][currentBody.name][SelectedLayer].ParticleDistance);
                             CloudGUI.Color.Clone(CloudLayer.ConfigBodyDatabase[configUrl][currentBody.name][SelectedLayer].Color);
                             CloudGUI.Altitude.Clone(CloudLayer.ConfigBodyDatabase[configUrl][currentBody.name][SelectedLayer].Altitude);
@@ -1109,9 +1118,9 @@ namespace Clouds
     {
         public TextureSetGUI MainTexture = new TextureSetGUI();
         public TextureSetGUI DetailTexture = new TextureSetGUI();
-        public string ParticleTopTexture = "";
-        public string ParticleLeftTexture = "";
-        public string ParticleFrontTexture = "";
+        public String ParticleTopTexture = "";
+        public String ParticleLeftTexture = "";
+        public String ParticleFrontTexture = "";
         public FloatGUI ParticleDistance = new FloatGUI();
         public ColorSetGUI Color = new ColorSetGUI();
         public FloatGUI Altitude = new FloatGUI();
