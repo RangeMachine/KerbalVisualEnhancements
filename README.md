@@ -30,4 +30,4 @@ It's supports all old clouds packs like [**Better Atmospheres**](http://forum.ke
 > You should have received a copy of the GNU General Public License
 > along with this program. If not, see <<http://www.gnu.org/licenses/>>.
 > 
-> Copyright (c) 2016 RangeMachine
+> Copyright © 2013-2018 Ryan Bray, RangeMachine
