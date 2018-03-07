@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright © 2016 RangeMachine
+ * Copyright Â© 2013-2018 Ryan Bray, RangeMachine
  */
 
 using System.IO;
@@ -24,6 +24,10 @@ public class BuildShaders
     [MenuItem("Kerbal Visual Enhancements/Build Shaders")]
     private static void BuildForAllPlatforms()
     {
+        // Check directory
+        if (!Directory.Exists("Bundles"))
+            Directory.CreateDirectory("Bundles");
+
         // Cleanup
         File.Delete("Bundles/DirectX.bundle");
         File.Delete("Bundles/OpenGL.bundle");

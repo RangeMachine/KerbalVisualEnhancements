@@ -113,7 +113,7 @@ Properties {
 				float3 worldNormal = normalize(mul( unity_ObjectToWorld, float4( v.normal, 0.0 ) ).xyz);
 				half3 ambientLighting = half3(0.05, 0.05, 0.05);
 				half3 lightDirection = normalize(_WorldSpaceLightPos0);
- 				half NdotL = saturate(dot (worldNormal, lightDirection));
+ 				half NdotL = saturate(dot (worldNormal, lightDirection) + 0.1) / 1.1;
 		        half diff = (NdotL - 0.01) / 0.99;
 				half lightIntensity = saturate(_LightColor0.a * diff * 4);
 				o.baseLight = saturate(ambientLighting + ((_MinLight + _LightColor0.rgb) * lightIntensity));

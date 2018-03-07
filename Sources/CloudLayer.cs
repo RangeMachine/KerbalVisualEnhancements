@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright © 2013-2017 Ryan Bray, RangeMachine
+ * Copyright © 2013-2018 Ryan Bray, RangeMachine
  */
  
 using System.Collections.Generic;
@@ -301,6 +301,9 @@ namespace Clouds
                 CloudMaterial.SetFloat("_FadeScale", 0.03f/shaderFloats.FadeDistance);
                 CloudMaterial.SetFloat("_MinLight", shaderFloats.MinimumLight);
                 CloudMaterial.SetFloat("_RimDist", shaderFloats.RimDistance);
+                
+                if (CloudParticleMaterial != null)
+                    CloudParticleMaterial.SetFloat("_MinLight", shaderFloats.MinimumLight);
             }
         }
 

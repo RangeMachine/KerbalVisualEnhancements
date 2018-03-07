@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright © 2013-2017 Ryan Bray, RangeMachine
+ * Copyright © 2013-2018 Ryan Bray, RangeMachine
  */
 
 using UnityEngine;
@@ -64,7 +64,6 @@ namespace Geometry
             Tools.CalculateMeshTangents(mesh);
 
             mesh.RecalculateBounds();
-            mesh.Optimize();
         }
 
     }
